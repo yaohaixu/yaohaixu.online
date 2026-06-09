@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncommon Windows — 姚海旭</title>
+    <meta name="description" content="姚海旭个人艺术网站 — Uncommon Windows 系列，AI 生成的超现实窗外摄影作品">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">Uncommon Windows</a>
+            <div class="nav-links">
+                <a href="#gallery">作品</a>
+                <a href="#about">关于</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Uncommon<br>Windows</h1>
+            <p class="hero-subtitle">姚海旭</p>
+            <p class="hero-desc">透过一扇扇不同寻常的窗户，看见超现实的远方</p>
+            <a href="#gallery" class="hero-cta">探索作品</a>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="section-header">
+            <p class="section-number">01</p>
+            <h2 class="section-title">窗外</h2>
+            <p class="section-subtitle">Beyond the Window</p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Rendered by JS -->
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="section-header">
+            <p class="section-number">02</p>
+            <h2 class="section-title">关于</h2>
+            <p class="section-subtitle">About</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>《Uncommon Windows》系列作品使用 AI 生成技术创作。每一扇窗户都通向一个不可能的世界——窗外可以是极光下的冰岛苔原，可以是海中的火山喷发，也可以是一颗巨大的木星占满天空。</p>
+                <p>这些图像探索了"窗口"作为媒介的双重性：它既是物理空间的边界，又是想象力的起点。通过将日常的窗景置换为超现实的景象，作品邀请观众重新审视熟悉与陌生、现实与虚构之间的界限。</p>
+                <p class="about-credit">Created with Recraft</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <p>&copy; 2024 姚海旭 · All Rights Reserved</p>
+            <p class="footer-domain">yaohaixu.online</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">&lsaquo;</button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">&rsaquo;</button>
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="">
+            <p class="lightbox-caption" id="lightboxCaption"></p>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
