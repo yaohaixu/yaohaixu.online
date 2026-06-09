@@ -358,6 +358,15 @@ section {
     opacity: 1;
 }
 
+.gallery-item-cn {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+    transform: translateY(10px);
+    transition: transform 0.4s var(--ease);
+}
+
 .gallery-item-title {
     font-size: 0.85rem;
     font-weight: 500;
