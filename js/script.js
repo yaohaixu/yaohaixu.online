@@ -54,6 +54,7 @@
 
             const overlay = document.createElement('div');
             overlay.className = 'gallery-item-overlay';
+            overlay.innerHTML = `<span class="gallery-item-cn">${img.cnTitle}</span><span class="gallery-item-title">${img.title}</span>`;
 
             item.appendChild(imgEl);
             item.appendChild(overlay);

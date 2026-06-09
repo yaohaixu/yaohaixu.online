@@ -375,6 +375,10 @@ section {
     transition: transform 0.4s var(--ease);
 }
 
+.gallery-item:hover .gallery-item-cn {
+    transform: translateY(0);
+}
+
 .gallery-item:hover .gallery-item-title {
     transform: translateY(0);
 }
