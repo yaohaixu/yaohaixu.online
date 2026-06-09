@@ -350,7 +350,9 @@ section {
     opacity: 0;
     transition: opacity 0.4s var(--ease);
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
     padding: 1.25rem;
 }
 
