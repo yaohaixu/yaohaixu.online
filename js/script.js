@@ -69,7 +69,7 @@
     function openLightbox(index) {
         currentIndex = index;
         const img = images[index];
-        lightboxImg.src = `images/full/${encodeURIComponent(img.file)}.png`;
+        lightboxImg.src = `images/full/${encodeURIComponent(img.file)}.jpg`;
         lightboxImg.alt = img.title;
         lightboxCaption.textContent = `${img.title}  —  ${index + 1} / ${images.length}`;
         lightbox.classList.add('active');
@@ -93,7 +93,7 @@
 
     function updateLightbox() {
         const img = images[currentIndex];
-        lightboxImg.src = `images/full/${encodeURIComponent(img.file)}.png`;
+        lightboxImg.src = `images/full/${encodeURIComponent(img.file)}.jpg`;
         lightboxImg.alt = img.title;
         lightboxCaption.textContent = `${img.title}  —  ${currentIndex + 1} / ${images.length}`;
     }
