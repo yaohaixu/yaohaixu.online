@@ -62,6 +62,6 @@ python3 -m http.server 8000
 
 ## 版权与许可
 
-MIT License © 2024 姚海旭
+MIT License © 2026 姚海旭
 
 原创 AI 艺术作品，版权所有。
