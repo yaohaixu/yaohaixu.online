@@ -101,7 +101,7 @@ nav.scrolled {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: url('../images/full/looking-out-the-window--there-is-a-vast-nebula-str.jpg');
+    background-image: url('../images/hero-bg.webp');
     background-size: cover;
     background-position: center;
     filter: brightness(0.6);
