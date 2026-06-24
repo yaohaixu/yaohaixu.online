@@ -48,7 +48,7 @@
             item.className = 'gallery-item';
 
             const imgEl = document.createElement('img');
-            imgEl.src = `images/thumb/${encodeURIComponent(img.file)}.jpg`;
+            imgEl.src = `images/thumb/${encodeURIComponent(img.file)}.webp`;
             imgEl.alt = img.title;
             imgEl.loading = 'lazy';
 
