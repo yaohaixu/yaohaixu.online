@@ -54,7 +54,14 @@
 
             const overlay = document.createElement('div');
             overlay.className = 'gallery-item-overlay';
-            overlay.innerHTML = `<span class="gallery-item-cn">${img.cnTitle}</span><span class="gallery-item-title">${img.title}</span>`;
+            const cnSpan = document.createElement('span');
+            cnSpan.className = 'gallery-item-cn';
+            cnSpan.textContent = img.cnTitle;
+            const titleSpan = document.createElement('span');
+            titleSpan.className = 'gallery-item-title';
+            titleSpan.textContent = img.title;
+            overlay.appendChild(cnSpan);
+            overlay.appendChild(titleSpan);
 
             item.appendChild(imgEl);
             item.appendChild(overlay);
