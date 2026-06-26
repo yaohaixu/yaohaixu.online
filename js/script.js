@@ -337,7 +337,10 @@
         if (e.key === 'ArrowRight') nextImage();
     });
 
-        /* ── Scroll Animations ── */
+    /* ── Back to Top ── */
+    var backToTop = document.getElementById('backToTop');
+
+    /* ── Scroll Animations ── */
     function handleScroll() {
         var scrollY = window.scrollY;
         nav.classList.toggle('scrolled', scrollY > 80);
@@ -358,6 +361,11 @@
             }
         }
 
+        // Back-to-top visibility
+        if (backToTop) {
+            backToTop.classList.toggle('visible', scrollY > window.innerHeight);
+        }
+
         // Gallery items visible reveal
         var items = document.querySelectorAll('.gallery-item');
         for (var i = 0; i < items.length; i++) {
@@ -368,6 +376,13 @@
         }
     }
 
+
+    // Back-to-top click
+    if (backToTop) {
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
