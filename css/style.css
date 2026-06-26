@@ -204,6 +204,13 @@ nav.scrolled {
     padding: 2rem;
 }
 
+.hero-title .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s var(--ease) forwards;
+}
+
 .hero-title {
     font-family: var(--font-serif);
     font-size: clamp(3rem, 12vw, 7rem);
@@ -436,6 +443,7 @@ section {
     cursor: pointer;
     aspect-ratio: 4 / 3;
     background: var(--gallery-placeholder);
+    perspective: 800px;
     transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
 
@@ -449,10 +457,15 @@ section {
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s var(--ease), filter 0.5s;
+    filter: blur(10px);
+}
+
+.gallery-item img.loaded {
+    filter: blur(0);
 }
 
 .gallery-item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.05) rotateX(calc(var(--tilt-y, 0) * 5deg)) rotateY(calc(var(--tilt-x, 0) * -5deg));
 }
 
 .gallery-item-overlay {
@@ -693,6 +706,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.45s var(--ease);
 }
 
 .lightbox-content img {
