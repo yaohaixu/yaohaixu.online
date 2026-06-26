@@ -356,7 +356,43 @@ section {
 .contact-value {
     font-size: 0.95rem;
     color: var(--text-muted);
-    transition: color 0.5s ease;
+    transition: color 0.3s ease;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.contact-link::after {
+    content: '↗';
+    font-size: 0.7rem;
+    opacity: 0;
+    transform: translateY(1px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.contact-link:hover {
+    color: var(--accent);
+}
+
+.contact-link:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-wechat {
+    cursor: pointer;
+    user-select: all;
+}
+
+.contact-wechat:hover {
+    color: var(--accent);
+}
+
+.contact-wechat.copied {
+    color: #4caf50;
 }
 
 .contact-note {
