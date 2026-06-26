@@ -304,17 +304,6 @@
             heroBg.style.transform = 'translateY(' + (scrollY * 0.3).toFixed(1) + 'px)';
         }
 
-        // Section header parallax
-        var headers = document.querySelectorAll('.section-header');
-        for (var h = 0; h < headers.length; h++) {
-            var hRect = headers[h].getBoundingClientRect();
-            var hVisible = hRect.top < window.innerHeight && hRect.bottom > 0;
-            if (hVisible) {
-                var hOffset = (hRect.top - window.innerHeight) * 0.15;
-                headers[h].style.transform = 'translateY(' + hOffset.toFixed(1) + 'px)';
-            }
-        }
-
         // Back-to-top visibility (lazy init)
         var bt = document.getElementById('backToTop');
         if (bt) {
