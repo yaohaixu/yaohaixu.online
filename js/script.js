@@ -338,17 +338,9 @@
     });
 
         /* ── Scroll Animations ── */
-    var backToTop = document.getElementById('backToTop');
-
     function handleScroll() {
         var scrollY = window.scrollY;
         nav.classList.toggle('scrolled', scrollY > 80);
-
-        // Back-to-top visibility (if element exists)
-        if (backToTop) {
-            backToTop.classList.toggle('visible', window.scrollY > window.innerHeight);
-        }
-
         // Hero background parallax
         var heroBg = document.querySelector('.hero-bg');
         if (heroBg) {
@@ -376,10 +368,6 @@
         }
     }
 
-
-    if (backToTop) backToTop.addEventListener('click', function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
