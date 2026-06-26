@@ -204,13 +204,6 @@ nav.scrolled {
     padding: 2rem;
 }
 
-.hero-title .char {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 0.8s var(--ease) forwards;
-}
-
 .hero-title {
     font-family: var(--font-serif);
     font-size: clamp(3rem, 12vw, 7rem);
