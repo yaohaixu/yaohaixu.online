@@ -181,4 +181,26 @@
     buildGallery();
     requestAnimationFrame(handleScroll);
 
+
+    /* ── Theme Toggle ── */
+    var toggle = document.getElementById('themeToggle');
+    var html = document.documentElement;
+
+    // Load saved preference or follow system
+    (function initTheme() {
+        var saved = localStorage.getItem('theme');
+        if (saved) {
+            html.setAttribute('data-theme', saved);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            html.setAttribute('data-theme', 'light');
+        }
+    })();
+
+    toggle.addEventListener('click', function () {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
+
 })();
