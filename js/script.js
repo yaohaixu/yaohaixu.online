@@ -203,4 +203,53 @@
         localStorage.setItem('theme', next);
     });
 
+
+    /* ── WeChat Copy ── */
+    var wechatEl = document.getElementById('wechatCopy');
+    if (wechatEl) {
+        wechatEl.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var text = wechatEl.textContent;
+            // Try Clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () {
+                    showWechatCopied();
+                }).catch(function () {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        });
+    }
+
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+            document.execCommand('copy');
+            showWechatCopied();
+        } catch (e) {
+            // silent fail
+        }
+        document.body.removeChild(ta);
+    }
+
+    function showWechatCopied() {
+        wechatEl.classList.add('copied');
+        var orig = wechatEl.textContent;
+        wechatEl.textContent = '已复制 ✓';
+        setTimeout(function () {
+            wechatEl.classList.remove('copied');
+            wechatEl.textContent = orig;
+        }, 1800);
+    }
+
 })();
