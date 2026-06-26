@@ -196,50 +196,7 @@
         item.style.setProperty('--tilt-y', ty.toFixed(3));
     }
 
-    /* ── Hero Character Animation ── */
-    function initHeroCharAnim() {
-        var title = document.querySelector('.hero-title');
-        if (!title) return;
 
-        // Collect text nodes and <br> elements preserving order
-        var fragments = [];
-        (function walk(node) {
-            for (var i = 0; i < node.childNodes.length; i++) {
-                var child = node.childNodes[i];
-                if (child.nodeType === 3) {
-                    // Text node: split into individual characters
-                    fragments.push({ type: 'text', value: child.textContent });
-                } else if (child.nodeName === 'BR') {
-                    fragments.push({ type: 'br' });
-                }
-            }
-        })(title);
-
-        // Clear and rebuild
-        title.innerHTML = '';
-        var charDelay = 0;
-        for (var f = 0; f < fragments.length; f++) {
-            var frag = fragments[f];
-            if (frag.type === 'br') {
-                title.appendChild(document.createElement('br'));
-            } else if (frag.type === 'text') {
-                var chars = frag.value.split('');
-                for (var c = 0; c < chars.length; c++) {
-                    var span = document.createElement('span');
-                    span.className = 'char';
-                    span.textContent = chars[c];
-                    span.style.animationDelay = (charDelay * 0.04).toFixed(2) + 's';
-                    title.appendChild(span);
-                    charDelay++;
-                }
-            }
-        }
-
-        // Remove the outer .hero-title fadeUp as fallback (chars handle it now)
-        title.style.animation = 'none';
-        title.style.opacity = '1';
-        title.style.transform = 'none';
-    }
 
     /* ── Lightbox ── */
     function openLightbox(index) {
@@ -337,9 +294,6 @@
         if (e.key === 'ArrowRight') nextImage();
     });
 
-    /* ── Back to Top ── */
-    var backToTop = document.getElementById('backToTop');
-
     /* ── Scroll Animations ── */
     function handleScroll() {
         var scrollY = window.scrollY;
@@ -361,9 +315,10 @@
             }
         }
 
-        // Back-to-top visibility
-        if (backToTop) {
-            backToTop.classList.toggle('visible', scrollY > window.innerHeight);
+        // Back-to-top visibility (lazy init)
+        var bt = document.getElementById('backToTop');
+        if (bt) {
+            bt.classList.toggle('visible', scrollY > window.innerHeight);
         }
 
         // Gallery items visible reveal
@@ -377,19 +332,21 @@
     }
 
 
-    // Back-to-top click
-    if (backToTop) {
-        backToTop.addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
+    // Back-to-top click (lazy init)
+    (function initBackToTop() {
+        var btt = document.getElementById('backToTop');
+        if (btt) {
+            btt.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     /* ── Init ── */
     buildGallery();
     requestAnimationFrame(handleScroll);
-    initHeroCharAnim();
     initMouseParallax();
     init3DTilt();
 
