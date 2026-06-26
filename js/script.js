@@ -163,8 +163,13 @@
     });
 
     /* ── Scroll Animations ── */
+    var backToTop = document.getElementById('backToTop');
+
     function handleScroll() {
         nav.classList.toggle('scrolled', window.scrollY > 80);
+
+        // Back-to-top visibility
+        backToTop.classList.toggle('visible', window.scrollY > window.innerHeight);
 
         var items = document.querySelectorAll('.gallery-item');
         for (var i = 0; i < items.length; i++) {
@@ -174,6 +179,11 @@
             }
         }
     }
+
+
+    backToTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
