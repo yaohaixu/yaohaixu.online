@@ -29,6 +29,9 @@
         { file: 'looking-out-the-window--there-is-a-cluster-of-aban', title: 'Abandoned Cluster', cnTitle: '废弃群落' },
     ];
 
+    /* ── Device Detection ── */
+    var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
     /* ── DOM Refs ── */
     const grid = document.getElementById('galleryGrid');
     const lightbox = document.getElementById('lightbox');
@@ -40,6 +43,7 @@
     const nav = document.querySelector('nav');
 
     let currentIndex = 0;
+    var touchRevealed = {};  // track which items have overlay revealed on touch
 
     /* ── Build Gallery ── */
     function buildGallery() {
@@ -48,7 +52,7 @@
             item.className = 'gallery-item';
 
             const imgEl = document.createElement('img');
-            imgEl.src = `images/thumb/${encodeURIComponent(img.file)}.webp`;
+            imgEl.src = 'images/thumb/' + encodeURIComponent(img.file) + '.webp';
             imgEl.alt = img.title;
             imgEl.loading = 'lazy';
 
@@ -66,17 +70,56 @@
             item.appendChild(imgEl);
             item.appendChild(overlay);
 
-            item.addEventListener('click', () => openLightbox(i));
+            // Touch: first tap reveals overlay, second tap opens lightbox
+            item.addEventListener('click', (function (index) {
+                return function (e) {
+                    if (!isTouchDevice) {
+                        openLightbox(index);
+                        return;
+                    }
+                    // Touch behavior
+                    if (!touchRevealed[index]) {
+                        // First tap: show overlay
+                        e.preventDefault();
+                        e.stopPropagation();
+                        item.classList.add('overlay-visible');
+                        touchRevealed[index] = true;
+                        // Hide any other revealed overlays
+                        hideAllOverlaysExcept(index);
+                    } else {
+                        // Second tap: open lightbox
+                        openLightbox(index);
+                    }
+                };
+            })(i));
 
             grid.appendChild(item);
         });
     }
 
+    function hideAllOverlaysExcept(index) {
+        var items = grid.querySelectorAll('.gallery-item');
+        for (var j = 0; j < items.length; j++) {
+            if (j !== index) {
+                items[j].classList.remove('overlay-visible');
+                touchRevealed[j] = false;
+            }
+        }
+    }
+
+    // Tap elsewhere to dismiss overlay
+    document.addEventListener('click', function (e) {
+        if (!isTouchDevice) return;
+        if (!e.target.closest('.gallery-item')) {
+            hideAllOverlaysExcept(-1);
+        }
+    });
+
     /* ── Lightbox ── */
     function openLightbox(index) {
         currentIndex = index;
         const img = images[index];
-        lightboxImg.src = `images/full/${encodeURIComponent(img.file)}.jpg`;
+        lightboxImg.src = 'images/full/' + encodeURIComponent(img.file) + '.jpg';
         lightboxImg.alt = img.title;
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -99,7 +142,7 @@
 
     function updateLightbox() {
         const img = images[currentIndex];
-        lightboxImg.src = `images/full/${encodeURIComponent(img.file)}.jpg`;
+        lightboxImg.src = 'images/full/' + encodeURIComponent(img.file) + '.jpg';
         lightboxImg.alt = img.title;
     }
 
@@ -108,11 +151,11 @@
     lightboxPrev.addEventListener('click', prevImage);
     lightboxNext.addEventListener('click', nextImage);
 
-    lightbox.addEventListener('click', (e) => {
+    lightbox.addEventListener('click', function (e) {
         if (e.target === lightbox) closeLightbox();
     });
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function (e) {
         if (!lightbox.classList.contains('active')) return;
         if (e.key === 'Escape') closeLightbox();
         if (e.key === 'ArrowLeft') prevImage();
@@ -121,24 +164,21 @@
 
     /* ── Scroll Animations ── */
     function handleScroll() {
-        // Nav border
         nav.classList.toggle('scrolled', window.scrollY > 80);
 
-        // Fade-in items
-        const items = document.querySelectorAll('.gallery-item');
-        items.forEach((item) => {
-            const rect = item.getBoundingClientRect();
+        var items = document.querySelectorAll('.gallery-item');
+        for (var i = 0; i < items.length; i++) {
+            var rect = items[i].getBoundingClientRect();
             if (rect.top < window.innerHeight - 100) {
-                item.classList.add('visible');
+                items[i].classList.add('visible');
             }
-        });
+        }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     /* ── Init ── */
     buildGallery();
-    // Trigger once for items already in view
     requestAnimationFrame(handleScroll);
 
 })();
