@@ -340,26 +340,129 @@
     init3DTilt();
 
 
-    /* ── Theme Toggle ── */
-    var toggle = document.getElementById('themeToggle');
+    /* ── Theme Toggle (three-state: auto / dark / light) ── */
+    var themeToggle = document.getElementById('themeToggle');
     var html = document.documentElement;
+    var systemDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // Load saved preference or follow system
-    (function initTheme() {
-        var saved = localStorage.getItem('theme');
-        if (saved) {
-            html.setAttribute('data-theme', saved);
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-            html.setAttribute('data-theme', 'light');
+    function getThemeMode() {
+        return localStorage.getItem('theme') || 'auto';
+    }
+
+    function applyTheme(mode) {
+        if (mode === 'auto') {
+            html.setAttribute('data-theme', systemDarkQuery.matches ? 'dark' : 'light');
+            html.setAttribute('data-theme-mode', 'auto');
+        } else {
+            html.setAttribute('data-theme', mode);
+            html.removeAttribute('data-theme-mode');
         }
+        localStorage.setItem('theme', mode);
+    }
+
+    // Init theme (default: auto)
+    (function initTheme() {
+        applyTheme(getThemeMode());
     })();
 
-    toggle.addEventListener('click', function () {
-        var current = html.getAttribute('data-theme');
-        var next = current === 'light' ? 'dark' : 'light';
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
+    // Listen for system theme changes when in auto mode
+    systemDarkQuery.addEventListener('change', function () {
+        if (getThemeMode() === 'auto') {
+            applyTheme('auto');
+        }
     });
+
+    themeToggle.addEventListener('click', function () {
+        var current = getThemeMode();
+        var next;
+        if (current === 'auto') {
+            next = 'dark';
+        } else if (current === 'dark') {
+            next = 'light';
+        } else {
+            next = 'auto';
+        }
+        applyTheme(next);
+    });
+
+    /* ── Language Toggle ── */
+    var translations = {
+        'nav-works': { zh: '作品', en: 'Works' },
+        'nav-about': { zh: '关于', en: 'About' },
+        'nav-contact': { zh: '联系', en: 'Contact' },
+        'hero-desc': { zh: '透过一扇扇不同寻常的窗户，看见超现实的远方', en: 'Through these uncommon windows, see the surreal beyond' },
+        'hero-cta': { zh: '探索作品', en: 'Explore' },
+        'section-works': { zh: '窗外', en: 'Beyond the Window' },
+        'section-about': { zh: '关于', en: 'About' },
+        'section-contact': { zh: '联系', en: 'Contact' },
+        'about-p1': { zh: '《Uncommon Windows》系列作品使用 AI 生成技术创作。每一扇窗户都通向一个不可能的世界——窗外可以是极光下的冰岛苔原，可以是海中的火山喷发，也可以是一颗巨大的木星占满天空。', en: 'The "Uncommon Windows" series is created using AI generation technology. Each window opens onto an impossible world \u2014 beyond the frame, there may be the Icelandic tundra under the aurora, a volcano erupting at sea, or a giant Jupiter filling the sky.' },
+        'about-p2': { zh: '这些图像探索了"窗口"作为媒介的双重性：它既是物理空间的边界，又是想象力的起点。通过将日常的窗景置换为超现实的景象，作品邀请观众重新审视熟悉与陌生、现实与虚构之间的界限。', en: 'These images explore the duality of the "window" as a medium: it is both a physical boundary and a departure point for imagination. By replacing everyday window views with surreal scenes, the work invites viewers to reconsider the boundary between the familiar and the strange, reality and fiction.' },
+        'contact-phone': { zh: '电话', en: 'Phone' },
+        'contact-wechat': { zh: '微信', en: 'WeChat' },
+        'contact-email': { zh: '邮箱', en: 'Email' },
+        'footer-copy': { zh: '\u00a9 2026 姚海旭 \u00b7 All Rights Reserved', en: '\u00a9 2026 Haixu Yao \u00b7 All Rights Reserved' }
+    };
+
+    var ariaTranslations = {
+        'back-to-top': { zh: '回到顶部', en: 'Back to Top' }
+    };
+
+    var langToggle = document.getElementById('langToggle');
+
+    function getLang() {
+        return localStorage.getItem('lang') || 'zh';
+    }
+
+    function applyLanguage(lang) {
+        html.setAttribute('data-lang', lang);
+        localStorage.setItem('lang', lang);
+
+        // Update text content
+        var i18nEls = document.querySelectorAll('[data-i18n]');
+        for (var i = 0; i < i18nEls.length; i++) {
+            var el = i18nEls[i];
+            var key = el.getAttribute('data-i18n');
+            if (translations[key] && translations[key][lang]) {
+                el.textContent = translations[key][lang];
+            }
+        }
+
+        // Update aria-labels
+        var ariaEls = document.querySelectorAll('[data-i18n-aria]');
+        for (var j = 0; j < ariaEls.length; j++) {
+            var aEl = ariaEls[j];
+            var aKey = aEl.getAttribute('data-i18n-aria');
+            if (ariaTranslations[aKey] && ariaTranslations[aKey][lang]) {
+                aEl.setAttribute('aria-label', ariaTranslations[aKey][lang]);
+                aEl.setAttribute('title', ariaTranslations[aKey][lang]);
+            }
+        }
+
+        // Update langToggle aria-label and title
+        langToggle.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
+        langToggle.setAttribute('title', lang === 'zh' ? 'Switch to English' : '切换到中文');
+
+        // Update themeToggle aria-label and title
+        var themeTgl = document.getElementById('themeToggle');
+        if (lang === 'en') {
+            themeTgl.setAttribute('aria-label', 'Toggle Theme');
+            themeTgl.setAttribute('title', 'Toggle Theme');
+        } else {
+            themeTgl.setAttribute('aria-label', '切换主题模式');
+            themeTgl.setAttribute('title', '切换主题模式');
+        }
+    }
+
+    langToggle.addEventListener('click', function () {
+        var current = getLang();
+        var next = current === 'zh' ? 'en' : 'zh';
+        applyLanguage(next);
+    });
+
+    // Init language (default: zh)
+    (function initLang() {
+        applyLanguage(getLang());
+    })();
 
 
     /* ── WeChat Copy ── */

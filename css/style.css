@@ -172,7 +172,69 @@ nav.scrolled {
     transform-origin: left;
 }
 
-/* ── Theme Toggle ── */
+/* ── Nav Toggles ── */
+.nav-toggles {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ── Language Toggle ── */
+.lang-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.35s ease, border-color 0.5s ease, background 0.35s ease;
+    font-family: var(--font-sans);
+}
+
+.lang-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-dim);
+}
+
+.lang-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+.lang-zh,
+.lang-en {
+    transition: color 0.35s ease, font-weight 0.35s ease;
+}
+
+[data-lang="en"] .lang-zh {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+[data-lang="en"] .lang-en {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+[data-lang="zh"] .lang-zh,
+:not([data-lang]) .lang-zh {
+    color: var(--accent);
+    font-weight: 600;
+}
+[data-lang="zh"] .lang-en,
+:not([data-lang]) .lang-en {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* ── Theme Toggle (three-state: auto / dark / light) ── */
 .theme-toggle {
     background: none;
     border: 1px solid var(--border);
@@ -200,13 +262,15 @@ nav.scrolled {
     box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 }
 
-.theme-icon {
+.theme-icon-sun,
+.theme-icon-moon,
+.theme-icon-auto {
     position: absolute;
     transition: opacity 0.35s ease, transform 0.45s var(--ease);
 }
 
-/* Dark mode: show moon, hide sun */
-.theme-icon-moon {
+/* Auto mode (default): show auto icon */
+.theme-icon-auto {
     opacity: 1;
     transform: rotate(0deg) scale(1);
 }
@@ -214,23 +278,63 @@ nav.scrolled {
     opacity: 0;
     transform: rotate(90deg) scale(0.5);
 }
-
-/* Light mode: show sun, hide moon */
-[data-theme="light"] .theme-icon-moon {
+.theme-icon-moon {
     opacity: 0;
     transform: rotate(-90deg) scale(0.5);
 }
-[data-theme="light"] .theme-icon-sun {
+
+/* Dark manual: hide auto & sun, show moon */
+[data-theme="dark"]:not([data-theme-mode]) .theme-icon-auto {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+[data-theme="dark"]:not([data-theme-mode]) .theme-icon-sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+[data-theme="dark"]:not([data-theme-mode]) .theme-icon-moon {
     opacity: 1;
     transform: rotate(0deg) scale(1);
 }
 
-.theme-toggle:hover .theme-icon {
-    transform: scale(1.1);
+/* Light manual: hide auto & moon, show sun */
+[data-theme="light"]:not([data-theme-mode]) .theme-icon-auto {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
 }
-[data-theme="light"] .theme-toggle:hover .theme-icon-sun {
-    transform: rotate(0deg) scale(1.1);
+[data-theme="light"]:not([data-theme-mode]) .theme-icon-sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
 }
+[data-theme="light"]:not([data-theme-mode]) .theme-icon-moon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+
+/* ── Language Mode ── */
+/* English mode: hide section subtitles (redundant with translated titles) */
+[data-lang="en"] .section-subtitle {
+    display: none;
+}
+
+/* English mode: hide Chinese overlay text on gallery items */
+[data-lang="en"] .gallery-item-cn {
+    display: none;
+}
+
+/* Mobile nav toggles layout */
+@media (max-width: 640px) {
+    .nav-toggles {
+        gap: 0.375rem;
+    }
+    .lang-toggle {
+        height: 36px;
+        padding: 0 0.6rem;
+        font-size: 0.7rem;
+    }
+}
+
 
 /* --- Hero --- */
 .hero {
