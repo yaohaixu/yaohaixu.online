@@ -74,7 +74,7 @@
 }
 
 [data-theme="light"] .hero-cta {
-    box-shadow: 0 0 20px rgba(184,147,74,0.18), 0 0 40px rgba(184,147,74,0.08);
+    box-shadow: none;
 }
 
 [data-theme="light"] .hero-cta:hover {
