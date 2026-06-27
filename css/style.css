@@ -74,11 +74,17 @@
 }
 
 [data-theme="light"] .hero-cta {
+    border-color: #c9a96c;
+    color: #c9a96c;
     box-shadow: none;
 }
 
+[data-theme="light"] .hero-cta::before {
+    background: #c9a96c;
+}
+
 [data-theme="light"] .hero-cta:hover {
-    box-shadow: 0 0 30px rgba(184,147,74,0.35), 0 0 60px rgba(184,147,74,0.2);
+    box-shadow: 0 0 30px rgba(201,169,108,0.35), 0 0 60px rgba(201,169,108,0.2);
 }
 
 
