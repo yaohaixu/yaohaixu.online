@@ -390,7 +390,7 @@
         'nav-works': { zh: '作品', en: 'Works' },
         'nav-about': { zh: '关于', en: 'About' },
         'nav-contact': { zh: '联系', en: 'Contact' },
-        'hero-desc': { zh: '透过一扇扇不同寻常的窗户，看见超现实的远方', en: 'Through these uncommon windows, see the surreal beyond' },
+        'hero-desc': { zh: '透过一扇扇不同寻常的窗户，看见超现实的远方', en: 'Through these uncommon windows,\nsee the surreal beyond' },
         'hero-cta': { zh: '探索作品', en: 'Explore' },
         'section-works': { zh: '窗外', en: 'Beyond the Window' },
         'section-about': { zh: '关于', en: 'About' },
