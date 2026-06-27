@@ -184,24 +184,24 @@ nav.scrolled {
     background: none;
     border: 1px solid var(--border);
     border-radius: 20px;
-    height: 40px;
-    padding: 0 0.75rem;
+    height: 36px;
+    padding: 0 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    justify-content: center;
     color: var(--text-muted);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 0.5px;
     transition: color 0.35s ease, border-color 0.5s ease, background 0.35s ease;
     font-family: var(--font-sans);
+    min-width: 44px;
 }
 
 .lang-toggle:hover {
     color: var(--accent);
     border-color: var(--accent);
-    background: var(--accent-dim);
 }
 
 .lang-toggle:focus-visible {
@@ -209,29 +209,8 @@ nav.scrolled {
     box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 }
 
-.lang-zh,
-.lang-en {
-    transition: color 0.35s ease, font-weight 0.35s ease;
-}
-
-[data-lang="en"] .lang-zh {
-    color: var(--text-muted);
-    font-weight: 400;
-}
-[data-lang="en"] .lang-en {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-[data-lang="zh"] .lang-zh,
-:not([data-lang]) .lang-zh {
-    color: var(--accent);
-    font-weight: 600;
-}
-[data-lang="zh"] .lang-en,
-:not([data-lang]) .lang-en {
-    color: var(--text-muted);
-    font-weight: 400;
+.lang-text {
+    transition: color 0.35s ease;
 }
 
 /* ── Theme Toggle (three-state: auto / dark / light) ── */
@@ -329,9 +308,10 @@ nav.scrolled {
         gap: 0.375rem;
     }
     .lang-toggle {
-        height: 36px;
-        padding: 0 0.6rem;
-        font-size: 0.7rem;
+        height: 32px;
+        padding: 0 8px;
+        font-size: 0.65rem;
+        min-width: 38px;
     }
 }
 

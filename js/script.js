@@ -438,31 +438,43 @@
             }
         }
 
+        // Update language button text (shows target language)
+        var langText = document.querySelector('.lang-text');
+        if (langText) {
+            langText.textContent = lang === 'zh' ? 'EN' : '中';
+        }
+
         // Update langToggle aria-label and title
         langToggle.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
         langToggle.setAttribute('title', lang === 'zh' ? 'Switch to English' : '切换到中文');
 
         // Update themeToggle aria-label and title
         var themeTgl = document.getElementById('themeToggle');
-        if (lang === 'en') {
-            themeTgl.setAttribute('aria-label', 'Toggle Theme');
-            themeTgl.setAttribute('title', 'Toggle Theme');
-        } else {
-            themeTgl.setAttribute('aria-label', '切换主题模式');
-            themeTgl.setAttribute('title', '切换主题模式');
+        if (themeTgl) {
+            if (lang === 'en') {
+                themeTgl.setAttribute('aria-label', 'Toggle Theme');
+                themeTgl.setAttribute('title', 'Toggle Theme');
+            } else {
+                themeTgl.setAttribute('aria-label', '切换主题模式');
+                themeTgl.setAttribute('title', '切换主题模式');
+            }
         }
     }
 
-    langToggle.addEventListener('click', function () {
-        var current = getLang();
-        var next = current === 'zh' ? 'en' : 'zh';
-        applyLanguage(next);
-    });
-
     // Init language (default: zh)
     (function initLang() {
-        applyLanguage(getLang());
+        var saved = getLang();
+        applyLanguage(saved);
     })();
+
+    // Robust click handler
+    if (langToggle) {
+        langToggle.addEventListener('click', function () {
+            var current = getLang();
+            var next = current === 'zh' ? 'en' : 'zh';
+            applyLanguage(next);
+        });
+    }
 
 
     /* ── WeChat Copy ── */
