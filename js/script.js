@@ -333,25 +333,6 @@
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    /* ── Smooth Scroll for nav links (mobile fallback) ── */
-    var navAnchors = document.querySelectorAll('.nav-links a, .nav-logo, .hero-cta');
-    for (var k = 0; k < navAnchors.length; k++) {
-        navAnchors[k].addEventListener('click', function (e) {
-            var href = this.getAttribute('href');
-            if (href && href.indexOf('#') === 0) {
-                e.preventDefault();
-                if (href === '#') {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    var target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            }
-        });
-    }
-
     /* ── Init ── */
     buildGallery();
     requestAnimationFrame(handleScroll);
