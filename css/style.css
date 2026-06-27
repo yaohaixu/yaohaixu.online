@@ -1002,13 +1002,20 @@ footer {
     nav {
         padding: 0.65rem 0.85rem;
     }
+    .nav-inner {
+        justify-content: center;
+    }
     .nav-logo {
         font-size: 0.85rem;
         letter-spacing: 0;
+        max-width: 7.2ch;
+        line-height: 1.15;
     }
     .nav-left {
         gap: 0.6rem;
         min-width: 0;
+        flex: 1;
+        justify-content: center;
     }
     .nav-links {
         gap: 0.55rem;
@@ -1017,6 +1024,10 @@ footer {
     }
     .nav-toggles {
         flex-shrink: 0;
+        position: absolute;
+        right: 0.85rem;
+        top: 50%;
+        transform: translateY(-50%);
     }
     section {
         padding: 3.5rem 1rem;
